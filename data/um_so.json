@@ -1,0 +1,7 @@
+{
+      "label": "carteira_oab",
+      "extraction_schema": {
+        "situacao": "Situação do profissional, normalmente no canto inferior direito."
+      },
+      "pdf_path": "oab_1.pdf"
+    }
