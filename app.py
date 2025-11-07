@@ -2,6 +2,7 @@ from utils.st_functions import (
     check_api_key,
     header,
     ftab1,
+    examples,
     footer,
     check_files,
     write_results,
@@ -68,41 +69,8 @@ with tab2:
         download_results()
 
     # ====================== EXEMPLOS
-    st.subheader("", divider="yellow")
-    st.subheader("Exemplos de arquivos para upload")
-
-    # Download de mais de um arquivo complica a UX (envolve .zip)
-    # portanto enviarei apenas o exemplo do Dr. Kakaroto
-    col1, col2, _ = st.columns(3)
-    with col1:
-        with open("data/um_so.json", "r") as f1:
-            dataset_exemple = f1.read()
-
-        st.download_button(
-            label="extraction_schema",
-            data=dataset_exemple,
-            file_name="dataset_exemplo.json",
-            mime="application/json",
-            icon=":material/download:",
-        )
-
-    with col2:
-
-        with open("data/files/oab_3.pdf", "rb") as f2:
-            pdf_exemple = f2.read()
-
-        st.download_button(
-            label="Arquivos PDF",
-            data=pdf_exemple,
-            file_name="exemplo_oab_3.pdf",
-            mime="application/pdf",
-            icon=":material/download:",
-        )
-
-    st.warning(
-        "Use esses arquivos como referencia de como devem ser os inputs desse sistema"
-    )
-
+    if not submitted:
+        examples()
 
 # ====================== RODAPE
 

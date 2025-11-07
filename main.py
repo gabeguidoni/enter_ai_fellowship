@@ -1,5 +1,6 @@
 from utils.constants import MODEL, TAMANHO_LOTE
-from utils.functions import build_prompts, print_results, print_duration, save_results
+from utils.functions import build_prompts, print_duration, save_results
+from utils.st_functions import write_fisrt_result
 from openai import AsyncOpenAI
 from dotenv import load_dotenv
 import os, time, asyncio
@@ -23,14 +24,18 @@ async def _call(async_client: AsyncOpenAI, p: dict):
 # ===========================
 
 
-async def _multiple_calls(client, prompts: list[dict]) -> list[object | BaseException]:
+async def _multiple_calls(
+    client, prompts: list[dict], first: bool = False
+) -> list[object | BaseException]:
     """
     Executa várias chamadas concorrentes e imprime os resultados
     """
 
     tasks = [_call(client, p) for p in prompts]
     results = await asyncio.gather(*tasks, return_exceptions=True)
-    # print_results(results)
+
+    if first:
+        write_fisrt_result(results)
     return results
 
 
@@ -44,7 +49,7 @@ async def _throttle_responses(
 
     async with AsyncOpenAI(api_key=api_key) as async_client:  # ATENCAO
         # async with aiohttp.ClientSession() as async_client:  # ATENCAO
-        all_results = await _multiple_calls(async_client, [prompts[0]])
+        all_results = await _multiple_calls(async_client, [prompts[0]], first=True)
         if len(prompts) > 1:
             for i in range(1, len(prompts), tamanho_lote):
                 lote_prompts = prompts[i : i + tamanho_lote]

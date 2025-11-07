@@ -23,7 +23,7 @@ Irei criar uma ferramenta que extrai todo texto, e envia cada arquivo para o GPT
 - Diferencial: Consigo fazer multiplas requisições em paralelo, assim demoro o mesmo tempo para trazer 1 ou 10 respostas (nao passar de 10 para nao congestionar)
 - Para economizar recursos financeiros do projeto e tbm nao deixar de fazer todos os testes necessarios ao desenvolvimento, criei um script clone do main.py (main_clone.py) com exatamente as mesmas funcoes, porém chama uma API gratuita.
 - Como UI irei criar uma pagina _Streamlit_, porém a ideia é que a pessoa rode localmente mesmo.
-- Obstaculo: a pagina streamlit deixa o sistema um pouco mais lento, e também impede de imprimir os resultados a medida que eles vao ficando prontos (regra do primeiro em <10s)
+- Obstaculo: a pagina streamlit deixa o sistema um pouco mais lento, e dificultou a atender a regra do primeiro <10s
 
 
 

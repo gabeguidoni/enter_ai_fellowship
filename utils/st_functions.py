@@ -48,19 +48,29 @@ def check_files(json_schema, pdf_files: list[object]) -> bool:
 
 
 def write_results(results, d, m):
-    st.subheader("", divider="yellow")
-    st.subheader("Resultados")
 
     n = len(results)
-    with st.container(height=500):
-        # Só imprime os 20 primeiros para reduzir custo de processamento
-        st.code(json.dumps(results[:20], ensure_ascii=False, indent=4), language="json")
+    if n > 1:
+        with st.container(height=500):
+            # Só imprime os 20 primeiros para reduzir custo de processamento
+            st.code(
+                json.dumps(results[1:20], ensure_ascii=False, indent=4), language="json"
+            )
     st.write((f"Esse processamento analisou {n} documentos e durou {d} segundos"))
     st.write(f"Uma média de {m} segundos por documento")
 
 
+def write_fisrt_result(results):
+    st.subheader("", divider="yellow")
+    st.subheader("Resultados")
+    st.code(json.dumps(results[0], ensure_ascii=False, indent=4), language="json")
+
+
 def download_results():
 
+    st.warning(
+        "Atenção: Está impresso na tela apenas uma amostra inicial, para conferir o resultado completo:"
+    )
     pasta = "data/outputs"
     arquivos = [f"{pasta}/{f}" for f in os.listdir(pasta)]
     if arquivos:
@@ -98,8 +108,48 @@ def ftab1():
     st.markdown(content, unsafe_allow_html=False)
 
 
+def examples():
+    st.subheader("", divider="yellow")
+    st.subheader("Exemplos de arquivos para upload")
+
+    # Download de mais de um arquivo complica a UX (envolve .zip)
+    # portanto enviarei apenas o exemplo do Dr. Kakaroto
+    col1, col2, _ = st.columns(3)
+    with col1:
+        with open("data/um_so.json", "r") as f1:
+            dataset_exemple = f1.read()
+
+        st.download_button(
+            label="extraction_schema",
+            data=dataset_exemple,
+            file_name="dataset_exemplo.json",
+            mime="application/json",
+            icon=":material/download:",
+        )
+
+    with col2:
+
+        with open("data/files/oab_3.pdf", "rb") as f2:
+            pdf_exemple = f2.read()
+
+        st.download_button(
+            label="Arquivos PDF",
+            data=pdf_exemple,
+            file_name="exemplo_oab_3.pdf",
+            mime="application/pdf",
+            icon=":material/download:",
+        )
+
+    st.warning(
+        "Use esses arquivos como referencia de como devem ser os inputs desse sistema"
+    )
+
+
 def footer():
     st.subheader("", divider="yellow")
+    st.markdown("Desenvolvido em novembro de 2025")
+    st.markdown("Mais projetos [meu Github](https://github.com/gabeguidoni)")
+    st.markdown("Contato [gabeguidoni@gmail.com](mailto:gabeguidoni@gmail.com)")
     st.markdown(
-        "Desenvolvido em novembro de 2025  \n[Meu Github](https://github.com/gabeguidoni)"
+        "Saba mais [sobre mim](https://www.linkedin.com/in/gabriel-guidoni-7b3b27208/)"
     )
