@@ -50,6 +50,27 @@ Irei criar uma ferramenta que extrai todo texto, e envia cada arquivo para o Gep
 - No final das paginas do app temos um footer com algumas informações sobre o candidado.
 
 
+## Estrutura do projeto
+```
+├── data/
+│   ├── files/
+│   ├── images/
+│   ├── outputs/  # deposito de outputs
+│   └── um_so.json  # arquivo enviado como exemplo
+├── utils/
+│   ├── __init__.py
+│   ├── constants.py
+│   ├── functions.py  # funcoes usadas pelo main.py
+│   └── st_functions.py  # funcoes usadas pelo app.py
+├── .gitignore
+├── README.md
+├── requirements.txt
+├── main_clone.py  # adaptacao para economizar recursos durante desenvolvimento
+├── main.py  # codigo principal da ferramenta
+└── app.py  # script para criacao da UI
+```
+
+
 ## Referências:
 - https://www.blog.getenter.ai/en/posts/software-engineer-agents-are-coming-and-its-not-optional
 - https://platform.openai.com/docs/guides/latest-model
