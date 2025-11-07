@@ -30,19 +30,19 @@ async def _multiple_calls(client, prompts: list[dict]) -> list[object | BaseExce
 
     tasks = [_call(client, p) for p in prompts]
     results = await asyncio.gather(*tasks, return_exceptions=True)
-    print_results(results)
+    # print_results(results)
     return results
 
 
 async def _throttle_responses(
-    prompts: list[dict[str, str | object]], tamanho_lote: int
+    api_key: str, prompts: list[dict[str, str | object]], tamanho_lote: int
 ) -> list[object | BaseException]:
     """
     Controla a cadencia das requisicoes
     A primeira faz e ja entrega, a seguir faz em lotes
     """
 
-    async with AsyncOpenAI(api_key=API_KEY) as async_client:  # ATENCAO
+    async with AsyncOpenAI(api_key=api_key) as async_client:  # ATENCAO
         # async with aiohttp.ClientSession() as async_client:  # ATENCAO
         all_results = await _multiple_calls(async_client, [prompts[0]])
         if len(prompts) > 1:
@@ -53,13 +53,14 @@ async def _throttle_responses(
     return all_results
 
 
-async def main():
+async def main(api_key: str, json_schemas: list[dict], pdf_files: list[object]):
     inicio = time.time()
-    prompts = build_prompts()
-    results = await _throttle_responses(prompts, TAMANHO_LOTE)
-    print_duration(inicio, time.time(), len(prompts))
+    prompts = build_prompts(json_schemas, pdf_files)
+    results = await _throttle_responses(api_key, prompts, TAMANHO_LOTE)
+    d, m = print_duration(inicio, time.time(), len(prompts))
     save_results(results)
+    return results, d, m
 
 
-if __name__ == "__main__":
-    asyncio.run(main())
+# if __name__ == "__main__":
+#     asyncio.run(main())

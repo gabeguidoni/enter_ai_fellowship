@@ -2,6 +2,8 @@
 .env
 drafts/*
 data/outputs/*
+data/files/*
+data/*.json
 
-__pycache__/
+__pycache__
 *.pyc
